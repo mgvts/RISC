@@ -18,19 +18,19 @@ class Command32:
     def __repr__(self):
         return reversed(self.full)
 
-    def opcode110111(self, *args):
+    def opcode0110111(self, *args):
         temp_imm = int(self.get_bits(12, 31), 2) << 12
         return f"lui {reg[self.rd]}, {temp_imm}", *args
-
-    def opcode0010111(self, *args):
-        temp_imm = int(self.get_bits(12, 30), 2) << 12 - int(self.get_bits(31, 31)) << 31
-        return f"auipc {reg[self.rd]}, {temp_imm}", *args
 
     def opcode1101111(self, *args):
         temp_imm = int(self.get_bits(31, 31) + self.get_bits(12, 19) +
                        self.get_bits(20, 20) + self.get_bits(21, 30), 2) * 2 - (1 << 21) * int(
             self.get_bits(31, 31))
         return f"jal {reg[self.rd]}", temp_imm, True
+
+    def opcode0010111(self, *args):
+        temp_imm = int(self.get_bits(12, 30), 2) << 12 - int(self.get_bits(31, 31)) << 31
+        return f"auipc {reg[self.rd]}, {temp_imm}", *args
 
     def opcode1100111(self, *args):
         return f"jalr {reg[self.rd]}, {int(self.imm, 2) - 2 << 11 * int(self.get_bits(31, 31))}({reg[self.rs1]})", *args
