@@ -3,4 +3,4 @@
 запуск через фаил <br/>
 main.py <br/>
 запуск через <br/>
-python main.py input.elf out.txt<br/>
+python hw4.py input.elf out.txt<br/>
